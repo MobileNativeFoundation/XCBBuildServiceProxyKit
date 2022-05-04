@@ -1,7 +1,7 @@
 import Foundation
 import Logging
 import NIO
-import XCBBuildServiceProxy
+import XCBBuildServiceProxyKit
 
 LoggingSystem.bootstrap { label in
     var handler = StreamLogHandler.standardError(label: label)

@@ -1,6 +1,6 @@
 alias(
-    name = "XCBBuildServiceProxy",
-    actual = "//Sources/XCBBuildServiceProxy",
+    name = "XCBBuildServiceProxyKit",
+    actual = "//Sources/XCBBuildServiceProxyKit",
     visibility = ["//visibility:public"],
 )
 
@@ -45,4 +45,3 @@ alias(
     actual = "//Sources/XCBProtocol_13_3",
     visibility = ["//visibility:public"],
 )
-

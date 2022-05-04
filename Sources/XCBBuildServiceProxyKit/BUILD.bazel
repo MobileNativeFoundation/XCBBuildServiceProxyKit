@@ -1,9 +1,9 @@
 load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library")
 
 swift_library(
-    name = "XCBBuildServiceProxy",
+    name = "XCBBuildServiceProxyKit",
     srcs = glob(["**/*.swift"]),
-    module_name = "XCBBuildServiceProxy",
+    module_name = "XCBBuildServiceProxyKit",
     deps = [
         "//Sources/XCBProtocol",
         "@com_github_apple_swift_log//:Logging",

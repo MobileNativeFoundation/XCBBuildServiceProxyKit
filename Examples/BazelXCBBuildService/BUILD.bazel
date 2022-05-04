@@ -14,9 +14,9 @@ swift_library(
         ":build_event_stream_proto",
         "@com_github_apple_swift_log//:Logging",
         "@com_github_apple_swift_nio//:NIO",
-        "@com_github_target_xcbbuildserviceproxy//:XCBBuildServiceProxy",
-        "@com_github_target_xcbbuildserviceproxy//:XCBProtocol",
-        "@com_github_target_xcbbuildserviceproxy//:XCBProtocol_12_0",
+        "@com_github_mobilenativefoundation_xcbbuildserviceproxykit//:XCBBuildServiceProxyKit",
+        "@com_github_mobilenativefoundation_xcbbuildserviceproxykit//:XCBProtocol",
+        "@com_github_mobilenativefoundation_xcbbuildserviceproxykit//:XCBProtocol_12_0",
     ],
 )
 

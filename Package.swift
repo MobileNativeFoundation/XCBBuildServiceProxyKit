@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "XCBBuildServiceProxy",
+    name: "XCBBuildServiceProxyKit",
     platforms: [.macOS(.v11)],
     products: [
         .library(name: "XCBProtocol", targets: ["XCBProtocol"]),
@@ -13,7 +13,7 @@ let package = Package(
         .library(name: "XCBProtocol_12_5", targets: ["XCBProtocol_12_5"]),
         .library(name: "XCBProtocol_13_0", targets: ["XCBProtocol_13_0"]),
         .library(name: "XCBProtocol_13_3", targets: ["XCBProtocol_13_3"]),
-        .library(name: "XCBBuildServiceProxy", targets: ["XCBBuildServiceProxy"]),
+        .library(name: "XCBBuildServiceProxyKit", targets: ["XCBBuildServiceProxyKit"]),
     ],
     dependencies: [
         // Make sure to update the versions used in the `repositories.bzl` file if you change them here
@@ -108,7 +108,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "XCBBuildServiceProxy",
+            name: "XCBBuildServiceProxyKit",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "NIO", package: "swift-nio"),

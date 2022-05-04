@@ -1,5 +1,5 @@
 import Foundation
-import XCBBuildServiceProxy
+import XCBBuildServiceProxyKit
 import XCBProtocol
 
 // swiftformat:disable braces

@@ -1,4 +1,4 @@
-workspace(name = "com_github_target_xcbbuildserviceproxy")
+workspace(name = "com_github_mobilenativefoundation_xcbbuildserviceproxykit")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -22,24 +22,39 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_swift/releases/download/0.23.0/rules_swift.0.23.0.tar.gz",
 )
 
-load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
 
 apple_support_dependencies()
 
-load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+load(
+    "@build_bazel_rules_apple//apple:repositories.bzl",
+    "apple_rules_dependencies",
+)
 
 apple_rules_dependencies()
 
-load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
+load(
+    "@build_bazel_rules_swift//swift:repositories.bzl",
+    "swift_rules_dependencies",
+)
 
 swift_rules_dependencies()
 
-load("@build_bazel_rules_swift//swift:extras.bzl", "swift_rules_extra_dependencies")
+load(
+    "@build_bazel_rules_swift//swift:extras.bzl",
+    "swift_rules_extra_dependencies",
+)
 
 swift_rules_extra_dependencies()
 
 # Project dependencies
 
-load("@com_github_target_xcbbuildserviceproxy//:repositories.bzl", "xcbbuildserviceproxy_dependencies")
+load(
+    "@com_github_mobilenativefoundation_xcbbuildserviceproxykit//:repositories.bzl",
+    "xcbbuildserviceproxykit_dependencies",
+)
 
-xcbbuildserviceproxy_dependencies()
+xcbbuildserviceproxykit_dependencies()

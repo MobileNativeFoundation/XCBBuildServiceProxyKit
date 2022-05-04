@@ -1,7 +1,7 @@
 import Foundation
 import Logging
 import NIO
-import XCBBuildServiceProxy
+import XCBBuildServiceProxyKit
 import XCBProtocol
 
 @_exported import XCBProtocol_12_0
