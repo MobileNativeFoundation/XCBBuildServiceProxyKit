@@ -1,5 +1,5 @@
 import Foundation
-import src_main_java_com_google_devtools_build_lib_buildeventstream_proto_build_event_stream_proto
+import BazelXCBBuildService_BEP_build_event_stream_proto
 import SwiftProtobuf
 
 protocol BazelBuildProcess {

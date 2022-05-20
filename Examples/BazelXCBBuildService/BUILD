@@ -1,9 +1,10 @@
-load("@build_bazel_rules_swift//swift:swift.bzl", "swift_library", "swift_proto_library")
-load("@build_bazel_rules_apple//apple:macos.bzl", "macos_command_line_application")
-
-swift_proto_library(
-    name = "build_event_stream_proto",
-    deps = ["@build_bazel_bazel//src/main/java/com/google/devtools/build/lib/buildeventstream/proto:build_event_stream_proto"],
+load(
+    "@build_bazel_rules_apple//apple:macos.bzl",
+    "macos_command_line_application",
+)
+load(
+    "@build_bazel_rules_swift//swift:swift.bzl",
+    "swift_library",
 )
 
 swift_library(
@@ -11,7 +12,7 @@ swift_library(
     module_name = "BazelXCBBuildService",
     srcs = glob(["Sources/**/*.swift"]),
     deps = [
-        ":build_event_stream_proto",
+        "//BazelXCBBuildService/BEP",
         "@com_github_apple_swift_log//:Logging",
         "@com_github_apple_swift_nio//:NIO",
         "@com_github_mobilenativefoundation_xcbbuildserviceproxykit//:XCBBuildServiceProxyKit",
@@ -22,7 +23,7 @@ swift_library(
 
 macos_command_line_application(
     name = "BazelXCBBuildService",
-    minimum_os_version = "10.15",
+    minimum_os_version = "11.0",
     deps = [":BazelXCBBuildService.library"],
 )
 
