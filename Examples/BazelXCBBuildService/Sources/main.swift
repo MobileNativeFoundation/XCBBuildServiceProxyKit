@@ -30,8 +30,7 @@ do {
     let service = try HybridXCBBuildService(
         name: "BazelXCBBuildService",
         group: group,
-        fileIO: fileIO,
-        requestHandler: RequestHandler()
+        requestHandler: RequestHandler(fileIO: fileIO)
     )
 
     do {

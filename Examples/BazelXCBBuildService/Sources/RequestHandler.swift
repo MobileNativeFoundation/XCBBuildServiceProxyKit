@@ -22,7 +22,13 @@ final class RequestHandler: HybridXCBBuildServiceRequestHandler {
     
     // We use negative numbers to ensure no duplication with XCBBuildService (though it seems that doesn't matter)
     private var lastBazelBuildNumber: Int64 = 0
-    
+
+    private let fileIO: NonBlockingFileIO
+
+    init(fileIO: NonBlockingFileIO) {
+        self.fileIO = fileIO
+    }
+
     func handleRequest(_ request: RPCRequest<BazelXCBBuildServiceRequestPayload>, context: Context) {
         // Unless `forwardRequest` is set to `false`, at the end we forward the request to XCBBuildService
         var shouldForwardRequest = true

@@ -15,14 +15,12 @@ final class HybridRPCRequestHandler<RequestHandler: HybridXCBBuildServiceRequest
     typealias Request = InboundIn
     typealias Response = OutboundIn
     
-    private let fileIO: NonBlockingFileIO
     private let xcbBuildService: XCBBuildService
     private let requestHandler: RequestHandler
     
     private var responsePromises: [UInt64: EventLoopPromise<Response>] = [:]
     
-    init(fileIO: NonBlockingFileIO, xcbBuildService: XCBBuildService, requestHandler: RequestHandler) {
-        self.fileIO = fileIO
+    init(xcbBuildService: XCBBuildService, requestHandler: RequestHandler) {
         self.xcbBuildService = xcbBuildService
         self.requestHandler = requestHandler
     }
