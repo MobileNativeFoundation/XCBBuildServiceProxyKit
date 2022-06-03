@@ -21,7 +21,14 @@ public final class HybridXCBBuildService<RequestHandler: HybridXCBBuildServiceRe
             .channelInitializer { channel in
                 xcbBuildServiceFuture.flatMap { xcbBuildService in
                     let framingHandler = RPCPacketCodec(label: "HybridXCBBuildService(\(name))")
-                    
+
+                    // When the channel for XCBBuildService is closed, such as the process is terminated,
+                    // close the channel for Xcode as well, which allows to terminate proxy process.
+                    // Xcode then relaunch it when it's needed.
+                    _ = xcbBuildService.channel.closeFuture.flatMap {
+                        channel.close()
+                    }
+
                     return channel.pipeline.addHandlers([
                         // Bytes -> RPCPacket from Xcode
                         ByteToMessageHandler(framingHandler),
