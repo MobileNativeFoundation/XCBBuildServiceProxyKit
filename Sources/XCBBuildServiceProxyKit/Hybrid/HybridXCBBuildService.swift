@@ -9,7 +9,7 @@ public final class HybridXCBBuildService<RequestHandler: HybridXCBBuildServiceRe
     private let bootstrap: NIOPipeBootstrap
     
     // TODO: Move NIO specific stuff into class
-    public init(name: String, group: EventLoopGroup, fileIO: NonBlockingFileIO, requestHandler: RequestHandler) throws {
+    public init(name: String, group: EventLoopGroup, requestHandler: RequestHandler) throws {
         self.name = name
         self.group = group
         
@@ -33,7 +33,6 @@ public final class HybridXCBBuildService<RequestHandler: HybridXCBBuildServiceRe
                         RPCResponseEncoder<RequestHandler.ResponsePayload>(),
                         // RPCRequests from Xcode, RPCResponses from XCBBuildService
                         HybridRPCRequestHandler<RequestHandler>(
-                            fileIO: fileIO,
                             xcbBuildService: xcbBuildService,
                             requestHandler: requestHandler
                         ),
