@@ -194,6 +194,10 @@ final class BazelClient: BazelBuildProcess {
         }
         
         processDispatchGroup.notify(queue: processResultsQueue) {
+            if bepFileHandle.readabilityHandler != nil {
+                bepFileHandle.closeFile()
+                bepFileHandle.readabilityHandler = nil
+            }
             terminationHandler(self.process.terminationStatus, self.isCancelled)
             isTerminated = true
         }
