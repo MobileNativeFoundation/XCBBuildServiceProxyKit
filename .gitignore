@@ -1,4 +1,3 @@
 /bazel-*
-/Examples/bazel-*
 /.vscode
 **/*.xcodeproj/*
