@@ -1,0 +1,43 @@
+build --enable_bzlmod
+build --experimental_convenience_symlinks=ignore
+build --incompatible_disallow_empty_glob
+
+# Show detailed errors for test failures
+test --test_output=errors --test_summary=detailed
+
+## RBC and RBE
+
+build --remote_default_exec_properties=OSFamily=darwin
+build --remote_default_exec_properties=cache_bust=macOS_12.0/1
+
+# Use BwtB
+build --experimental_inmemory_jdeps_files
+build --experimental_inmemory_dotd_files
+build --remote_download_outputs=minimal
+test --remote_download_outputs=toplevel
+
+# Build with --config=cache to use BuildBuddy Remote Cache
+build:cache --bes_backend=grpcs://remote.buildbuddy.io
+build:cache --bes_results_url=https://app.buildbuddy.io/invocation/
+build:cache --experimental_remote_cache_async
+build:cache --experimental_remote_cache_compression
+build:cache --jobs=100
+build:cache --modify_execution_info=^(BitcodeSymbolsCopy|BundleApp|BundleTreeApp|DsymDwarf|DsymLipo|GenerateAppleSymbolsFile|ObjcBinarySymbolStrip|CppLink|ObjcLink|ProcessAndSign|SignBinary|SwiftArchive|SwiftStdlibCopy)$=+no-remote,^(BundleResources|ImportedDynamicFrameworkProcessor)$=+no-remote-exec
+build:cache --remote_cache=grpcs://remote.buildbuddy.io
+build:cache --@rules_xcodeproj//xcodeproj:extra_common_flags='--config=cache'
+build:cache --@rules_xcodeproj//xcodeproj:extra_indexbuild_flags='--bes_backend= --bes_results_url='
+build:cache --@rules_xcodeproj//xcodeproj:extra_generator_flags='--bes_backend= --bes_results_url='
+
+# Build with --config=remote to use BuildBuddy RBE
+build:remote --config=cache
+build:remote --remote_executor=grpcs://remote.buildbuddy.io
+
+# Configuration used for BuildBuddy workflows
+build:workflows --config=cache
+build:workflows --build_metadata=ROLE=CI
+build:workflows --build_metadata=VISIBILITY=PUBLIC
+build:workflows --remote_instance_name=xcbbuildserviceproxykit/workflows
+build:workflows --color=yes
+build:workflows --terminal_columns=120
+build:workflows --disk_cache=
+build:workflows --@rules_xcodeproj//xcodeproj:extra_generator_flags='--config=workflows --bes_backend= --bes_results_url='

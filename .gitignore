@@ -1,3 +1,5 @@
 /bazel-*
+/.build
+/.swiftpm
 /.vscode
 **/*.xcodeproj/*
