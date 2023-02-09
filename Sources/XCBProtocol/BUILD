@@ -6,4 +6,7 @@ swift_library(
     module_name = "XCBProtocol",
     tags = ["manual"],
     visibility = ["//:__subpackages__"],
+    deps = [
+        "@com_github_apple_swift_collections//:OrderedCollections",
+    ],
 )

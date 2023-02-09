@@ -19,3 +19,9 @@ bazel_dep(
     version = "1.3.3",
     dev_dependency = True,
 )
+
+non_module_deps = use_extension("//lib:extensions.bzl", "non_module_deps")
+use_repo(
+    non_module_deps,
+    "com_github_apple_swift_collections",
+)
