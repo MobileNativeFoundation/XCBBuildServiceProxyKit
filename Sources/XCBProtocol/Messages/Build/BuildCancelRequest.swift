@@ -1,4 +1,4 @@
-public struct BuildCancelRequest: SessionMessage {
+public struct BuildCancelRequest: SessionMessage, Codable {
     public static let name = "BUILD_CANCEL"
 
     public var sessionHandle: String

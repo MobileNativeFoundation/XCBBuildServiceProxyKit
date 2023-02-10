@@ -9,6 +9,7 @@ swift_library(
     tags = ["manual"],
     deps = [
         "//Sources/XCBProtocol",
+        "@com_github_pointfreeco_swift_custom_dump//:CustomDump",
     ],
 )
 
