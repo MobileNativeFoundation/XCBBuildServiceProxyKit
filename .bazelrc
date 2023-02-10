@@ -41,3 +41,7 @@ build:workflows --color=yes
 build:workflows --terminal_columns=120
 build:workflows --disk_cache=
 build:workflows --@rules_xcodeproj//xcodeproj:extra_generator_flags='--config=workflows --bes_backend= --bes_results_url='
+
+
+
+build --override_module=rules_xcodeproj=/Users/brentley/Developer/rules_xcodeproj
