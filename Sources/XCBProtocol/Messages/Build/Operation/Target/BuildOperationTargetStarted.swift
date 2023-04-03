@@ -1,5 +1,5 @@
 // FIXME: JSON Encode
-public struct BuildOperationTargetStarted: Message, Codable {
+public struct BuildOperationTargetStarted: Message {
     public static let name = "BUILD_TARGET_STARTED"
 
     public var id: Int

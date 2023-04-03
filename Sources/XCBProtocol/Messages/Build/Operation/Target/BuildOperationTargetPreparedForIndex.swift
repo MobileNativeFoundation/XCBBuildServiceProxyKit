@@ -7,6 +7,6 @@ public struct BuildOperationTargetPreparedForIndex: Message {
     public var info: PreparedForIndexResultInfo
 }
 
-public struct PreparedForIndexResultInfo {
+public struct PreparedForIndexResultInfo: Codable {
     let timestamp: Date
 }

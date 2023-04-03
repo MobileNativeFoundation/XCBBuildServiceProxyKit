@@ -21,7 +21,7 @@ public struct BuildOperationTaskStarted: Message {
     }
 }
 
-public struct BuildOperationTaskInfo {
+public struct BuildOperationTaskInfo: Codable {
     /// e.g. `"Swift Compiler"`, `"Shell Script Invocation"`
     public var taskName: String
 

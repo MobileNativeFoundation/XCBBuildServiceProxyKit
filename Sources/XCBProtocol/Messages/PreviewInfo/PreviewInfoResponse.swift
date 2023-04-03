@@ -11,7 +11,7 @@ public struct PreviewInfoResponse: Message {
     }
 }
 
-public struct PreviewInfoMessagePayload {
+public struct PreviewInfoMessagePayload: Codable {
     /// e.g. `"macosx10.14"`
     public var sdkRoot: String
 

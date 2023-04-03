@@ -10,11 +10,11 @@ public struct BuildRequestMessagePayload: Codable {
     public var useDryRun: Bool
     public var showNonLoggedProgress: Bool
     public var buildPlanDiagnosticsDirPath: String?
-    public var buildCommand: BuildCommandMessagePayload
-    public var schemeCommand: SchemeCommandMessagePayload
+    @MessageEnumWithPayload public var buildCommand: BuildCommandMessagePayload
+    @MessageEnum public var schemeCommand: SchemeCommandMessagePayload
     public var containerPath: String?
     public var buildDescriptionID: String?
-    public var qos: BuildQoSMessagePayload?
+    public var qos: MessageEnum<BuildQoSMessagePayload>?
     public var jsonRepresentation: String?
 
     public init(
@@ -47,12 +47,12 @@ public struct BuildRequestMessagePayload: Codable {
         self.schemeCommand = schemeCommand
         self.containerPath = containerPath
         self.buildDescriptionID = buildDescriptionID
-        self.qos = qos
+        self.qos = qos.map(MessageEnum.init)
         self.jsonRepresentation = jsonRepresentation
     }
 }
 
-public enum BuildCommandMessagePayload: Codable {
+public enum BuildCommandMessagePayload {
     case build(style: BuildTaskStyleMessagePayload, skipDependencies: Bool)
     case generateAssemblyCode(buildOnlyTheseFiles: [String])
     case generatePreprocessedFile(buildOnlyTheseFiles: [String])
@@ -61,8 +61,11 @@ public enum BuildCommandMessagePayload: Codable {
     case cleanBuildFolder(style: BuildLocationStyleMessagePayload)
     case migrate
     case preview
+}
 
-    public enum Command {
+// TODO: This should return an Int as the tag for MsgPack and String for JSON
+extension BuildCommandMessagePayload: MessageEnumWithPayloadCodable {
+    public enum Command: Hashable, CaseIterable {
         case build
         case generateAssemblyCode
         case generatePreprocessedFile
@@ -72,26 +75,102 @@ public enum BuildCommandMessagePayload: Codable {
         case cleanBuildFolder
         case preview
     }
+
+    enum CodingKeys: String, CodingKey {
+        case command
+        case payload
+
+        case files
+        case targets
+        case style
+        case skipDependencies
+        case enableIndexBuildArena
+    }
+
+    public func encode(tagInt: Int, to encoder: Encoder) throws {
+        var container = encoder
+            .container(keyedBy: CodingKeys.self)
+        try container.encode(tagInt, forKey: .command)
+
+        switch self {
+        case .build(let style, let skipDependencies):
+            var payloadContainer = container
+                .nestedContainer(keyedBy: CodingKeys.self, forKey: .payload)
+            try payloadContainer.encode(MessageEnum(wrappedValue: style), forKey: .style)
+            try payloadContainer.encode(skipDependencies, forKey: .skipDependencies)
+        case .generateAssemblyCode(let files):
+            try container.encode(files, forKey: .files)
+        case .generatePreprocessedFile(let files):
+            try container.encode(files, forKey: .files)
+        case .singleFileBuild(let files):
+            try container.encode(files, forKey: .files)
+        case .prepareForIndexing(let targets, let enableIndexBuildArena):
+            var payloadContainer = container
+                .nestedContainer(keyedBy: CodingKeys.self, forKey: .payload)
+            try payloadContainer.encode(targets, forKey: .targets)
+            try payloadContainer.encode(enableIndexBuildArena, forKey: .enableIndexBuildArena)
+        case .cleanBuildFolder(let style):
+            try container.encode(MessageEnum(wrappedValue: style), forKey: .style)
+        case .migrate:
+            try container.encodeNil(forKey: .payload)
+        case .preview:
+            try container.encodeNil(forKey: .payload)
+        }
+    }
+
+    public static func tagCases() -> Command.AllCases {
+        return [
+            .build,
+            .generateAssemblyCode,
+            .generatePreprocessedFile,
+            .singleFileBuild,
+            .prepareForIndexing,
+            .migrate,
+            .cleanBuildFolder,
+            .preview,
+        ]
+    }
+
+    public func tag() -> Command {
+        switch self {
+        case .build:
+            return .build
+        case .generateAssemblyCode:
+            return .generateAssemblyCode
+        case .generatePreprocessedFile:
+            return .generatePreprocessedFile
+        case .singleFileBuild:
+            return .singleFileBuild
+        case .prepareForIndexing:
+            return .prepareForIndexing
+        case .cleanBuildFolder:
+            return .cleanBuildFolder
+        case .migrate:
+            return .migrate
+        case .preview:
+            return .preview
+        }
+    }
 }
 
-public enum BuildLocationStyleMessagePayload: Codable {
+public enum BuildLocationStyleMessagePayload: Hashable, CaseIterable, MessageEnumCodable {
     case regular
     case legacy
 }
 
-public enum BuildQoSMessagePayload: Codable {
+public enum BuildQoSMessagePayload: Hashable, CaseIterable, MessageEnumCodable {
     case background
     case utility
     case `default`
     case userInitiated
 }
 
-public enum BuildTaskStyleMessagePayload: Codable {
+public enum BuildTaskStyleMessagePayload: Hashable, CaseIterable, MessageEnumCodable {
     case buildOnly
     case buildAndRun
 }
 
-public enum SchemeCommandMessagePayload: Int, Decodable {
+public enum SchemeCommandMessagePayload: Hashable, CaseIterable, MessageEnumCodable {
     case launch
     case test
     case profile
@@ -110,7 +189,7 @@ public struct ConfiguredTargetMessagePayload: Codable {
 
 public struct BuildParametersMessagePayload: Codable {
     /// e.g. `"build"`, `"clean"`
-    public var action: Action
+    @MessageEnum public var action: Action
 
     /// e.g. `"Debug"`, `"Release"`
     public var configuration: String?
@@ -140,7 +219,7 @@ public struct BuildParametersMessagePayload: Codable {
         self.overrides = overrides
     }
 
-    public enum Action: String, Decodable {
+    public enum Action: String, CaseIterable, MessageEnumCodable {
         case analyze
         case archive
         case clean

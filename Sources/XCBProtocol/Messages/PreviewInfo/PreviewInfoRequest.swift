@@ -1,5 +1,5 @@
 // FIXME: JSON Encode
-public struct PreviewInfoRequest: SessionMessage, Codable {
+public struct PreviewInfoRequest: SessionMessage {
     public static let name = "PREVIEW_INFO_REQUESTED"
 
     public var sessionHandle: String

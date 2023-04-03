@@ -2,7 +2,7 @@ public struct BuildOperationTaskEnded: Message {
     public static let name = "BUILD_TASK_ENDED"
 
     public var id: Int
-    public var status: Status
+    @MessageEnum public var status: Status
     public var signalled: Bool
     public var metrics: Metrics?
     
@@ -18,13 +18,13 @@ public struct BuildOperationTaskEnded: Message {
         self.metrics = metrics
     }
 
-    public enum Status: Int {
+    public enum Status: Hashable, CaseIterable, MessageEnumCodable {
         case succeeded
         case cancelled
         case failed
     }
 
-    public struct Metrics {
+    public struct Metrics: Codable {
         public var metrics: UInt64
         public var utime: UInt64
         public var stime: UInt64

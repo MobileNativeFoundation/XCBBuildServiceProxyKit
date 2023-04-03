@@ -9,14 +9,14 @@ public struct WorkspaceInfoResponse: Message {
         self.workspaceInfo = workspaceInfo
     }
 
-    public struct WorkspaceInfo {
+    public struct WorkspaceInfo: Codable {
         public var targetInfos: [TargetInfo]
 
         public init(targetInfos: [TargetInfo]) {
             self.targetInfos = targetInfos
         }
 
-        public struct TargetInfo {
+        public struct TargetInfo: Codable {
             public var guid: String
             public var targetName: String
             public var projectName: String

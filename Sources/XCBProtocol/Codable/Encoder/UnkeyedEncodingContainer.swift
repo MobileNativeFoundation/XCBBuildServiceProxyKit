@@ -22,28 +22,12 @@ extension _MessagePackEncoder.UnkeyedContainer {
 
 extension _MessagePackEncoder.UnkeyedContainer: _MessagePackEncoderContainer {
     var data: Data {
-        var data = Data()
-        
-        let length = storage.count
-        if let uint16 = UInt16(exactly: length) {
-            if uint16 <= 15 {
-                data.append(0x90 + UInt8(uint16))
-            } else {
-                data.append(0xdc)
-                data.append(contentsOf: uint16.bigEndianBytes)
-            }
-        } else if let uint32 = UInt32(exactly: length) {
-            data.append(0xdd)
-            data.append(contentsOf: uint32.bigEndianBytes)
-        } else {
-            fatalError()
+        get throws {
+            return try _MessagePackEncoder.array(
+                storage.map { try $0.data },
+                codingPath: codingPath
+            )
         }
-        
-        for container in storage {
-            data.append(container.data)
-        }
-        
-        return data
     }
 }
 

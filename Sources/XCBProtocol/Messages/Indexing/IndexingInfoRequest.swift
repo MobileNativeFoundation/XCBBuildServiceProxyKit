@@ -1,5 +1,5 @@
 // FIXME: JSON Encode
-public struct IndexingInfoRequest: SessionMessage, Codable {
+public struct IndexingInfoRequest: SessionMessage {
     public static let name = "INDEXING_INFO_REQUESTED"
 
     public var sessionHandle: String

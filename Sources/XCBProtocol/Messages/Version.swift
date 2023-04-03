@@ -1,4 +1,4 @@
-public struct Version: RawRepresentable {
+public struct Version: RawRepresentable, Codable {
     public var rawValue: [UInt]
 
     public init(rawValue: [UInt]) {

@@ -7,14 +7,14 @@ public struct TransferSessionPIFResponse: Message {
         self.missingObjects = missingObjects
     }
 
-    public enum PIFObjectType {
+    public enum PIFObjectType: Hashable, CaseIterable, MessageEnumCodable {
         case workspace
         case project
         case target
     }
 
-    public struct MissingObject {
-        public var type: PIFObjectType
+    public struct MissingObject: Codable {
+        @MessageEnum public var type: PIFObjectType
         public var signature: String
     }
 }

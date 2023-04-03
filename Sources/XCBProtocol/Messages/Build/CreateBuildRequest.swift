@@ -1,5 +1,5 @@
 // FIXME: JSON Encode
-public struct CreateBuildRequest: SessionMessage, Codable {
+public struct CreateBuildRequest: SessionMessage {
     public static let name = "CREATE_BUILD"
 
     public var sessionHandle: String

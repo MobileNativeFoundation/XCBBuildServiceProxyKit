@@ -9,7 +9,7 @@ public struct TransferSessionPIFObjectsRequest: SessionMessage {
         self.objects = objects
     }
 
-    public struct ObjectData {
+    public struct ObjectData: Codable {
         public var typeName: String
         public var signature: String
         public var data: ByteString

@@ -1,4 +1,4 @@
-public protocol Message {
+public protocol Message: Codable {
     static var name: String { get }
 }
 

@@ -1,11 +1,11 @@
-public struct SetSessionUserPreferencesRequest: SessionMessage, Decodable {
+public struct SetSessionUserPreferencesRequest: SessionMessage, Codable {
     public static let name = "SET_SESSION_USER_PREFERENCES"
 
     public var sessionHandle: String
     public var enableDebugActivityLogs: Bool
     public var enableBuildDebugging: Bool
     public var enableBuildSystemCaching: Bool
-    public var activityTextShorteningLevel: ActivityTextShorteningLevel
+    @MessageEnum public var activityTextShorteningLevel: ActivityTextShorteningLevel
     public var enableSwiftBuildSystemIntegration: Bool
     public var usePerConfigurationBuildLocations: Bool?
 
@@ -30,7 +30,7 @@ public struct SetSessionUserPreferencesRequest: SessionMessage, Decodable {
     }
 }
 
-public enum ActivityTextShorteningLevel: Int, Decodable {
+public enum ActivityTextShorteningLevel: Hashable, CaseIterable, MessageEnumCodable {
     case legacy
     case buildCountsOnly
     case allDynamicText

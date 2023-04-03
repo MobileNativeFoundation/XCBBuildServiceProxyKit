@@ -1,4 +1,4 @@
-public enum Platform: String, Decodable {
+public enum Platform: String, Codable {
     case macosx
     case iphoneos
     case iphonesimulator
